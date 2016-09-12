@@ -3,16 +3,13 @@
 * Fall 2016
 * Instructor: Phil O'Connell
 * TODO: DON'T FORGET TO PUT YOUR NAME AND ID
-* Student: Stew Dent
-* ID: abc1234
+* Student: Courtney Soda
+* ID: cjs5844
 */
 package wheeloffortune;
 
 public class WheelOfFortune {
 
-  /**
-   * @param args the command line arguments
-   */
   public static void main(String[] args) {
     
   }
