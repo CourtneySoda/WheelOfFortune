@@ -33,6 +33,7 @@ public class WheelOfFortune {
         } else if (userChoice.equals("D")) {
             System.out.println("You choose to Quit the Game");
             //Quit the game
+            
         } //Testing option
         else if (userChoice.equals("E")) {
             System.out.println("This is test letter input");
