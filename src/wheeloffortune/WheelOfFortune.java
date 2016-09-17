@@ -33,11 +33,11 @@ public class WheelOfFortune {
         } else if (userChoice.equals("D")) {
             System.out.println("You choose to Quit the Game");
             //Quit the game
-            
-        } //Testing option
+
+        } //Testing option with user able to guess letter
         else if (userChoice.equals("E")) {
             System.out.println("This is test letter input");
-            String letterChoice = "";
+
             //Prompt user to enter a letter
             System.out.println("Please choose a letter");
             //ERROR if not a letter
@@ -47,7 +47,7 @@ public class WheelOfFortune {
                 keyboard.next();
             }
             //read input
-            letterChoice = keyboard.next();
+            String letterChoice = keyboard.next();
             //Print letter back to screen
             System.out.println(letterChoice);
 
