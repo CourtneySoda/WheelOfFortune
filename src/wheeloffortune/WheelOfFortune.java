@@ -159,6 +159,10 @@ public class WheelOfFortune {
                     spinTheWheel();
                 case 8:
                     //Display Puzzle
+                  
+                    System.out.println("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG");
+                  
+                    
                 case 9:
                     //InputLetter returns letter chosen
                     System.out.println("Your letter is: " + inputLetter());
