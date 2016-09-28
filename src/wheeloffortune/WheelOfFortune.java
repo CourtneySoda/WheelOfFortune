@@ -49,12 +49,8 @@ public class WheelOfFortune {
             "1. Spin the Wheel",
             "2. Buy a Vowel",
             "3. Solve the puzzle",
-            "4. Quit the game",
-            "", //5
-            "", //6
-            "", //7
-            "8. Toggle puzzle reveal",
-            "9. Test letter input"
+            "4. Quit the game"
+            
     );
     //4 is number that signals quit
     private static final int _quitChoiceNumber = 4;
@@ -188,15 +184,7 @@ public class WheelOfFortune {
                     System.out.println("Your letter is: " + letter);
                     guessedLetters.put(letter, true);
                     break;
-                case 8:
-                    //Display Puzzle
-
-                    System.out.println("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG");
-
-                case 9:
-                    //InputLetter returns letter chosen
-                    System.out.println("Your letter is: " + inputLetter());
-                    break;
+              
             }
 
         }
