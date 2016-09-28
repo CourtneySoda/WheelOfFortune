@@ -36,6 +36,57 @@ public class WheelOfFortune {
     private static String chooseRandomWedgeValue() {
         int randomWedgeIndex = _random.nextInt(_wedgeCount);
 
+        if (randomWedgeIndex == 13) {
+            System.out.println("You spinned Bankrupt");
+            _winnings = 0;
+        } else if (randomWedgeIndex == 0) {
+            _winnings += 5000;
+        } else if (randomWedgeIndex == 1) {
+            _winnings += 600;
+        } else if (randomWedgeIndex == 2) {
+            _winnings += 500;
+        } else if (randomWedgeIndex == 3) {
+            _winnings += 300;
+        } else if (randomWedgeIndex == 4) {
+            _winnings += 500;
+        } else if (randomWedgeIndex == 5) {
+            _winnings += 800;
+        } else if (randomWedgeIndex == 6) {
+            _winnings += 550;
+        } else if (randomWedgeIndex == 7) {
+            _winnings += 400;
+        } else if (randomWedgeIndex == 8) {
+            _winnings += 300;
+        } else if (randomWedgeIndex == 9) {
+            _winnings += 900;
+        } else if (randomWedgeIndex == 10) {
+            _winnings += 500;
+        } else if (randomWedgeIndex == 11) {
+            _winnings += 300;
+        } else if (randomWedgeIndex == 12) {
+            _winnings += 900;
+        } else if (randomWedgeIndex == 14) {
+            _winnings += 600;
+        } else if (randomWedgeIndex == 15) {
+            _winnings += 400;
+        } else if (randomWedgeIndex == 16) {
+            _winnings += 300;
+        } else if (randomWedgeIndex == 17) {
+            _winnings += 0;
+        } else if (randomWedgeIndex == 18) {
+            _winnings += 800;
+        } else if (randomWedgeIndex == 19) {
+            _winnings += 350;
+        } else if (randomWedgeIndex == 20) {
+            _winnings += 450;
+        } else if (randomWedgeIndex == 21) {
+            _winnings += 700;
+        } else if (randomWedgeIndex == 22) {
+            _winnings += 300;
+        } else if (randomWedgeIndex == 23) {
+            _winnings += 600;
+        }
+
         return _wedges.get(randomWedgeIndex);
     }
 
@@ -67,10 +118,12 @@ public class WheelOfFortune {
             char c = puzzle.charAt(i);
             //reveal all letters or guess a letter
             boolean isLetterGuessed = revealLetters || guessedLetters.containsKey(c);
-            //hide letter if it has not been guessed/ show blanks
+
+//hide letter if it has not been guessed/ show blanks
             if (c != ' ' && !isLetterGuessed) {
                 c = '_';
             }
+
             //puts a space between each char
             maskedPuzzle.append(c + " ");
         }
@@ -114,13 +167,28 @@ public class WheelOfFortune {
                 letter = Character.toUpperCase(letterChoice.charAt(0));
                 //If letterChoice is not a letter, error
                 if (!Character.isLetter(letter)) {
-                    System.out.println("That is not a letter");
-                } else {
+                    System.out.println("That is not a letter"); 
+                } //can not guess vowel here
+                else if (letterChoice == "[aeiou]"){
+                    System.out.println("You can not guess a vowel");
+                    break;
+                }
+                else {
                     finished = true;
                 }
             }
         }
         return letter;
+
+    }
+    //Method to buy a vowel
+    private static void buyAVowel() {
+        //Vowels cost $250
+        _winnings -= 250;
+        System.out.println("Please choose a vowel");
+        //Vowel has to be a vowel
+        String vowel = _keyboard.next("[aeiou]");
+        System.out.println("You chose: " + vowel);
 
     }
 
@@ -178,8 +246,14 @@ public class WheelOfFortune {
                     char letter = inputLetter();
                     System.out.println("Your letter is: " + letter);
                     guessedLetters.put(letter, true);
-                    break;
 
+                    break;
+                case 2:
+                    if (_winnings < 250) {
+                        System.out.println("You do not have enough money to buy a vowel.");
+                        break;
+                    }
+                    buyAVowel();
             }
 
         }
