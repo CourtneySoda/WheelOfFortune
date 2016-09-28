@@ -16,32 +16,27 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class WheelOfFortune {
+
     // Read user input
     private static final Scanner _keyboard = new Scanner(System.in);
     //To get random values
     private static final Random _random = new Random();
     //To Hide letters
     private static boolean revealLetters = false;
-    
-    //Method for Spinning the Wheel to land on a wedge
-    private static void spinTheWheel() {
-        //Store 24 values in the array
-        int wedgeValues[] = {5000, 600, 500, 300, 500, 800, 550, 400, 300, 900,
-            500, 300, 900, 600, 400, 300, 800, 350, 450, 700, 300, 600, 0, 1};
-        //Randomly selects a wedge value based on place value
-        int randomSpinValue = (int) (Math.random() * 23);
-        //DISPLAY what they landed
-        //Assign 0 equal to bankrupt
-        if (randomSpinValue == 0) {
-            System.out.println("You spinned Bankrupt");
-            //Assign 1 equal to lose a turn
-        } else if (randomSpinValue == 1) {
-            System.out.println("You spinned Lose a Turn");
-        } else {
-            //Prints out the value you spinned - a random choice from array
-            System.out.println("You Spinned " + wedgeValues[randomSpinValue]);
-        }
+    //Establish base winnings
+    private static int _winnings = 0;
 
+    private static final List<String> _wedges = Arrays.asList(
+            "$5000", "$600", "$500", "$300", "$500", "$800", "$550", "$400", "$300",
+            "$900", "$500", "$300", "$900", "BANKRUPT", "$600", "$400", "$300",
+            "LOSE A TURN", "$800", "$350", "$450", "$700", "$300", "$600");
+
+    private static final int _wedgeCount = _wedges.size();
+
+    private static String chooseRandomWedgeValue() {
+        int randomWedgeIndex = _random.nextInt(_wedgeCount);
+
+        return _wedges.get(randomWedgeIndex);
     }
 
     //Method for Menu Choices Printing out
@@ -50,7 +45,6 @@ public class WheelOfFortune {
             "2. Buy a Vowel",
             "3. Solve the puzzle",
             "4. Quit the game"
-            
     );
     //4 is number that signals quit
     private static final int _quitChoiceNumber = 4;
@@ -83,13 +77,13 @@ public class WheelOfFortune {
         //String builder to String
         return maskedPuzzle.toString();
     }
+
     //Method to choose random puzzle
     private static String chooseRandomPuzzle() {
         int randomPuzzleIndex = _random.nextInt(_puzzlesCount);
         //Returns a puzzle
         return _puzzles.get(randomPuzzleIndex);
     }
-    
 
     //Method to make sure Menu Choice is valid
     private static boolean isValidMenuChoice(int choice) {
@@ -102,7 +96,7 @@ public class WheelOfFortune {
         String menuText = _menuChoices.get(index);
         return !menuText.equals("");
     }
-    
+
     //Method for inputting a letter
     private static char inputLetter() {
         char letter = ' ';
@@ -147,6 +141,8 @@ public class WheelOfFortune {
             //Prints out puzzle
             System.out.println(maskPuzzle(puzzle, revealLetters));
             System.out.println("\n");
+
+            System.out.println("Winnings: " + _winnings);
             //For each choice in method menuChoices display menu choice
             for (String menuChoice : _menuChoices) {
                 if (!menuChoice.equals("")) {
@@ -178,13 +174,12 @@ public class WheelOfFortune {
                     quit = true;
                     break;
                 case 1:
-                    //Method spinTheWheel  when user chooses 1
-                    spinTheWheel();
+                    System.out.println("You landed on: " + chooseRandomWedgeValue());
                     char letter = inputLetter();
                     System.out.println("Your letter is: " + letter);
                     guessedLetters.put(letter, true);
                     break;
-              
+
             }
 
         }
