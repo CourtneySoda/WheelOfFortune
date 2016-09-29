@@ -162,18 +162,22 @@ public class WheelOfFortune {
             //If letterChoice is greater than one letter, error
             if (letterChoice.length() != 1) {
                 System.out.println("Enter just one letter");
-            } else {
+            } //error for already choosing a letter
+            else {
                 //converts letter to uppercase
                 letter = Character.toUpperCase(letterChoice.charAt(0));
                 //If letterChoice is not a letter, error
                 if (!Character.isLetter(letter)) {
-                    System.out.println("That is not a letter"); 
+                    System.out.println("That is not a letter");
                 } //can not guess vowel here
-                else if (letterChoice == "[aeiou]"){
+                else if (letterChoice.equals("[AEIOU]")) {
                     System.out.println("You can not guess a vowel");
                     break;
-                }
-                else {
+                } //if letter was already guessed display error
+                else if (letterChoice.equals(guessedLetters)) {
+                    System.out.println("You already picked that");
+                    break;
+                } else {
                     finished = true;
                 }
             }
@@ -181,14 +185,21 @@ public class WheelOfFortune {
         return letter;
 
     }
+
     //Method to buy a vowel
-    private static void buyAVowel() {
+    private static void buyVowel() {
         //Vowels cost $250
         _winnings -= 250;
         System.out.println("Please choose a vowel");
-        //Vowel has to be a vowel
-        String vowel = _keyboard.next("[aeiou]");
+        //Vowel is a character
+        char vowel = ' ';
+        //user input
+        String vowelChoice = _keyboard.next("[aeiou]");
+        //vowel converts to uppercase what the user just input
+        vowel = Character.toUpperCase(vowelChoice.charAt(0));
+        //print out what vowel they chose
         System.out.println("You chose: " + vowel);
+        guessedLetters.put(vowel, true);
 
     }
 
@@ -242,18 +253,36 @@ public class WheelOfFortune {
                     quit = true;
                     break;
                 case 1:
+                    //prints what wedge they landed on
                     System.out.println("You landed on: " + chooseRandomWedgeValue());
+                    //makes letter the result of inputLetter()
                     char letter = inputLetter();
                     System.out.println("Your letter is: " + letter);
+                    //Adds the letter to the puzzle
                     guessedLetters.put(letter, true);
-
                     break;
                 case 2:
+                    //can not buy a vowel if winnings are less than 250
                     if (_winnings < 250) {
                         System.out.println("You do not have enough money to buy a vowel.");
                         break;
+                    } else {//if they do have enought money run buyAVowel
+                        buyVowel();
+                        break;
                     }
-                    buyAVowel();
+
+                case 3:
+                    //Solve the puzzle
+                    //shows puzzle
+                    System.out.println(maskPuzzle(puzzle, revealLetters));
+                    //for each space in puzzle input a letter
+                    for (int i = 0; i < puzzle.length(); i++) {
+                        char solvePuzzleLetter = inputLetter();
+                        //add it to puzzle
+                        guessedLetters.put(solvePuzzleLetter, true);
+                        break;
+                    }
+
             }
 
         }
