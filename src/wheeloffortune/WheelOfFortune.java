@@ -7,7 +7,7 @@
  */
 package wheeloffortune;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,22 +23,23 @@ public class WheelOfFortune {
     private static final Random _random = new Random();
     //To Hide letters
     private static boolean revealLetters = false;
-    //Establish base winnings
+    //Establish base winnings/ money
     private static int _winnings = 0;
-
+    //stores the wedge values into a list
     private static final List<String> _wedges = Arrays.asList(
             "$5000", "$600", "$500", "$300", "$500", "$800", "$550", "$400", "$300",
             "$900", "$500", "$300", "$900", "BANKRUPT", "$600", "$400", "$300",
             "LOSE A TURN", "$800", "$350", "$450", "$700", "$300", "$600");
-
+    
     private static final int _wedgeCount = _wedges.size();
-
+    //Method for assigning money to wedge value
     private static String chooseRandomWedgeValue() {
         int randomWedgeIndex = _random.nextInt(_wedgeCount);
-
+        //if random wedge value hits bankrupt, make winnings 0
         if (randomWedgeIndex == 13) {
             System.out.println("You spinned Bankrupt");
             _winnings = 0;
+            //for all the rest, add value to winnings
         } else if (randomWedgeIndex == 0) {
             _winnings += 5000;
         } else if (randomWedgeIndex == 1) {
@@ -116,6 +117,7 @@ public class WheelOfFortune {
         //for each letter in the puzzle 
         for (int i = 0; i < puzzle.length(); i++) {
             char c = puzzle.charAt(i);
+
             //reveal all letters or guess a letter
             boolean isLetterGuessed = revealLetters || guessedLetters.containsKey(c);
 
@@ -140,7 +142,7 @@ public class WheelOfFortune {
 
     //Method to make sure Menu Choice is valid
     private static boolean isValidMenuChoice(int choice) {
-        //Makes sure that the number is withing the menuChoice
+        //Makes sure that the number is within the menuChoice
         if (choice < 1 || choice > _menuChoices.size()) {
             return false;
         }
@@ -162,22 +164,20 @@ public class WheelOfFortune {
             //If letterChoice is greater than one letter, error
             if (letterChoice.length() != 1) {
                 System.out.println("Enter just one letter");
-            } //error for already choosing a letter
-            else {
+            } //error if letter is a vowel
+            else if (letterChoice.equals("[AEIOUaeiou]")) {
+                System.out.println("You can not guess a vowel");
+                //error for already choosing a letter
+            } else if (guessedLetters.containsKey(letterChoice)) {
+                System.out.println("You already chose that letter");
+            } else {
                 //converts letter to uppercase
                 letter = Character.toUpperCase(letterChoice.charAt(0));
                 //If letterChoice is not a letter, error
                 if (!Character.isLetter(letter)) {
                     System.out.println("That is not a letter");
                 } //can not guess vowel here
-                else if (letterChoice.equals("[AEIOU]")) {
-                    System.out.println("You can not guess a vowel");
-                    break;
-                } //if letter was already guessed display error
-                else if (letterChoice.equals(guessedLetters)) {
-                    System.out.println("You already picked that");
-                    break;
-                } else {
+                else {
                     finished = true;
                 }
             }
@@ -262,11 +262,11 @@ public class WheelOfFortune {
                     guessedLetters.put(letter, true);
                     break;
                 case 2:
-                    //can not buy a vowel if winnings are less than 250
+                    //can not buy a vowel if winnings are less than $250
                     if (_winnings < 250) {
                         System.out.println("You do not have enough money to buy a vowel.");
                         break;
-                    } else {//if they do have enought money run buyAVowel
+                    } else {//if they do have enough money run buyAVowel
                         buyVowel();
                         break;
                     }
@@ -278,7 +278,7 @@ public class WheelOfFortune {
                     //for each space in puzzle input a letter
                     for (int i = 0; i < puzzle.length(); i++) {
                         char solvePuzzleLetter = inputLetter();
-                        //add it to puzzle
+                        //adds it to puzzle
                         guessedLetters.put(solvePuzzleLetter, true);
                         break;
                     }
